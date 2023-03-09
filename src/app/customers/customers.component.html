@@ -1,0 +1,55 @@
+<div class="container mt-2">
+    <ng-container *ngIf="customers |async as listCustomer ; else failureOrloading">
+        <div class="card">
+
+            <div class="card-header">Customers</div>
+            <div class="card-body">
+                <div *ngIf="searchFormGroup">
+                <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" >
+                 <div class="input-group ">
+                    <label class="input-group-text">Keyword</label>
+                    <input type="text" formControlName="keyword" class="form-control">
+                    <button class="btn btn-info">
+                        <i class="bi bi-search"></i>
+
+                    </button>
+                 </div>
+                </form>
+            </div>
+                <table class="table">
+                    <thead>
+                        <tr><th>ID</th> <th>Name</th> <th>email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let c of customers |async">
+                                <td>{{c.id}}</td>
+                                <td>{{c.name}}</td>
+                                <td>{{c.email}}</td>
+                                <td></td>
+                                <td>
+                                    <button  (click)="deleteCustomer(c)" class="btn btn-danger">
+                                        <i class="bi bi-trash">  
+                                        </i>
+                                    </button>
+
+                                </td>
+                                <td> update</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template  #failureOrloading>
+<ng-container *ngIf="erroMessage; else loading">
+    <div class="text-danger">
+        {{erroMessage}}
+    </div>
+</ng-container>
+    </ng-template>
+ <ng-template #loading>
+ loading ..........
+</ng-template>
+
+</div>
